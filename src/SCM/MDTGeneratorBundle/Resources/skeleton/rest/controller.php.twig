@@ -30,7 +30,7 @@ use SCM\MDTGeneratorBundle\Controller\MDTController;
 {% block phpdoc_class_header %}
  * {{ entity }} controller.
 {% endblock phpdoc_class_header %}
- * @RouteResource("{{ entity }}")
+ * @RouteResource("{{ entity }}",pluralize=false)
 {% block phpdoc_class_annotations %}
 {% if 'annotation' == format %}
  * @Route("/{{ route_prefix }}")

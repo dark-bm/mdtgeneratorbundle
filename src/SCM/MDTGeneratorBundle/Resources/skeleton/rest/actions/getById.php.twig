@@ -2,6 +2,15 @@
 {% block phpdoc_method_header %}
      * Get a {{ entity }} entity
      *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Get a {{ entity }} entity",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     204 = "Returned when no results",
+     *     500 = "Returned when error"
+     *   }
+     * )
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response

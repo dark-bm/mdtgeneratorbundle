@@ -2,6 +2,14 @@
 {% block phpdoc_method_header %}
      * Create a {{ entity }} entity.
      *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Create a {{ entity }} entity.",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     500 = "Returned when error"
+     *   }
+     * )
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request

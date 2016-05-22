@@ -2,6 +2,15 @@
 {% block phpdoc_method_header %}
      * Partial Update to a {{ entity }} entity.
      *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Partial Update to a {{ entity }} entity",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     204 = "Returned when no results",
+     *     500 = "Returned when error"
+     *   }
+     * )
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
