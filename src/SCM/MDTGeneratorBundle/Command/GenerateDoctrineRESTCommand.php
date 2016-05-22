@@ -88,7 +88,8 @@ EOT
 
         $format         = "rest";
         $prefix         = $this->getRoutePrefix($input, $entity);
-        $namespace      = $this->getNamespacePrefix($input,$bundle);
+        $prefix .= $this->getNamespacePrefix($input,$bundle);
+
         $forceOverwrite = $input->getOption('overwrite');
 
         $questionHelper->writeSection($output, 'REST api generation');
@@ -100,7 +101,7 @@ EOT
         $document    = $input->getOption('document');
 
         $generator = $this->getGenerator($bundle);
-        $generator->generate($bundle, $entity, $metadata[0], $prefix.$namespace, $forceOverwrite, $resource, $document);
+        $generator->generate($bundle, $entity, $metadata[0], $prefix, $forceOverwrite, $resource, $document);
 
         $output->writeln('Generating the REST api code: <info>OK</info>');
 
