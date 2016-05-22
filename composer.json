@@ -1,5 +1,5 @@
 {
-    "name": "voryx/restgeneratorbundle",
+    "name": "dark-bm/mdtgeneratorbundle",
     "description": "REST API Generator for Symfony 2",
     "type": "symfony-bundle",
     "license": "MIT",
@@ -9,6 +9,9 @@
         },
         {
             "name": "David Dan"
+        },
+        {
+            "name": "Chukin Anton"
         }
     ],
     "require": {
@@ -20,7 +23,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Voryx\\RESTGeneratorBundle": "src/"
+            "SCM\\MDTGeneratorBundle": "src/"
         }
     },
     "extra" : {

@@ -1,19 +1,24 @@
 <?php
 
 
-namespace Voryx\RESTGeneratorBundle\Form\Type;
+namespace SCM\MDTGeneratorBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Form\Transformer\EntityToIdObjectTransformer;
+use MDTGeneratorBundle\Form\DataTransformer\EntityArrayToIdArrayTransformer;
+use MDTGeneratorBundle\Form\DataTransformer\ObjectToIdTransformer;
+use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
+use Symfony\Bridge\Doctrine\Form\EventListener\MergeDoctrineCollectionListener;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Voryx\RESTGeneratorBundle\Form\DataTransformer\ArrayToIdTransformer;
+use MDTGeneratorBundle\Form\DataTransformer\ArrayToIdTransformer;
 
 /**
- * Class VoryxEntityType
- * @package Voryx\RESTGeneratorBundle\Form\Type
+ * Class RestEntityType
+ * @package MDTGeneratorBundle\Form\Type
  */
-class VoryxEntityType extends EntityType
+class RestEntityType extends EntityType
 {
 
     /**
@@ -36,9 +41,14 @@ class VoryxEntityType extends EntityType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $view_transformer = new ArrayToIdTransformer($this->em, null);
-        $builder->addViewTransformer($view_transformer);
-//        $model_transformer = new UserToUsernameTransformer()
+        $builder->resetViewTransformers();
+        $builder->addViewTransformer(new ObjectToIdTransformer($this->em,$options['class']));
+        if ($options['multiple']) {
+            $builder->addViewTransformer(new EntityArrayToIdArrayTransformer($this->em, null));
+        } else {
+            $builder->addViewTransformer(new ArrayToIdTransformer($this->em, null));
+
+        }
     }
 
     /**
@@ -66,6 +76,6 @@ class VoryxEntityType extends EntityType
      */
     public function getName()
     {
-        return 'voryx_entity';
+        return 'rest_entity';
     }
 }

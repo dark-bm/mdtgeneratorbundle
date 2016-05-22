@@ -23,7 +23,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use SCM\MDTGeneratorBundle\Controller\MDTController;
 {% endblock use_statements %}
 
 /**
@@ -38,7 +38,7 @@ use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 {% endblock phpdoc_class_annotations %}
  */
 {% block class_definition %}
-class {{ entity_class }}RESTController extends VoryxController
+class {{ entity_class }}RESTController extends MDTController
 {% endblock class_definition %}
 {
 {% block class_body %}

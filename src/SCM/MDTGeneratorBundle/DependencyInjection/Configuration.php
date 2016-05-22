@@ -1,6 +1,6 @@
 <?php
 
-namespace Voryx\RESTGeneratorBundle\DependencyInjection;
+namespace SCM\MDTGeneratorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('voryx_rest_generator');
+        $treeBuilder->root('mdt_generator');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

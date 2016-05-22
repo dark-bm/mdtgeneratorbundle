@@ -1,13 +1,13 @@
 <?php
 
-namespace Voryx\RESTGeneratorBundle\Controller;
+namespace SCM\MDTGeneratorBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\FOSRestController;
 
-class VoryxController extends Controller
+class MDTController extends FOSRestController
 {
 
     /**

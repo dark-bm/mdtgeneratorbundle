@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Voryx\RESTGeneratorBundle\Generator;
+namespace SCM\MDTGeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\Filesystem\Filesystem;

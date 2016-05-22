@@ -1,11 +1,11 @@
 <?php
 
-namespace Voryx\RESTGeneratorBundle\Form\DataTransformer;
+namespace SCM\MDTGeneratorBundle\Form\DataTransformer;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\DataTransformerInterface;
 
-class ArrayToIdTransformer implements DataTransformerInterface
+class EntityArrayToIdArrayTransformer implements DataTransformerInterface
 {
     /**
      * @var EntityManager
@@ -51,9 +51,12 @@ class ArrayToIdTransformer implements DataTransformerInterface
             return $data;
         }
 
-        //@todo lookup entity's identifier.  Assuming that "id" is the identifier
-        if (is_array($data) && isset($data['id'])) {
-            return $data['id'];
+        if (is_array($data)) {
+            $ids = array();
+            foreach($data as $entity){
+                $ids[] = $entity['id'];
+            }
+            return $ids;
         }
 
         return null;
