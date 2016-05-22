@@ -2,7 +2,16 @@
 {% block phpdoc_method_header %}
      * Get a {{ entity }} entity
      *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Get a {{ entity }} entity",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     204 = "Returned when no results"
+     *   }
+     * )
      * @View(serializerEnableMaxDepthChecks=true)
+     * @Get("{{ route_prefix }}/{{ entity }}/{{id}}")
      *
      * @return Response
 {% endblock phpdoc_method_header %}
