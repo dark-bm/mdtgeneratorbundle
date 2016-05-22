@@ -88,6 +88,7 @@ EOT
 
         $format         = "rest";
         $prefix         = $this->getRoutePrefix($input, $entity);
+        $namespace      = $this->getNamespacePrefix($input,$bundle);
         $forceOverwrite = $input->getOption('overwrite');
 
         $questionHelper->writeSection($output, 'REST api generation');
@@ -99,7 +100,7 @@ EOT
         $document    = $input->getOption('document');
 
         $generator = $this->getGenerator($bundle);
-        $generator->generate($bundle, $entity, $metadata[0], $prefix, $forceOverwrite, $resource, $document);
+        $generator->generate($bundle, $entity, $metadata[0], $prefix.$namespace, $forceOverwrite, $resource, $document);
 
         $output->writeln('Generating the REST api code: <info>OK</info>');
 
@@ -258,6 +259,17 @@ EOT
         $skeletonDirs[] = dirname($reflClass->getFileName()) . '/../Resources';
 
         return $skeletonDirs;
+    }
+
+    protected function getNamespacePrefix(InputInterface $input, $bundle)
+    {
+        $prefix = $input->getOption('api-namespace') ?: strtolower(str_replace(array('\\', '/'), '_', $bundle));
+
+        if ($prefix && '/' !== $prefix[0]) {
+            $prefix = '/'.$prefix;
+        }
+
+        return $prefix;
     }
 
 }
