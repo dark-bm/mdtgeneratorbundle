@@ -36,6 +36,7 @@ class GenerateDoctrineRESTCommand extends GenerateDoctrineCrudCommand
             array(
                 new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)'),
                 new InputOption('route-prefix', '', InputOption::VALUE_REQUIRED, 'The route prefix'),
+                new InputOption('api-namespace', '', InputOption::VALUE_REQUIRED, 'Api namespace'),
                 new InputOption('overwrite', '', InputOption::VALUE_NONE, 'Do not stop the generation if rest api controller already exist, thus overwriting all generated files'),
                 new InputOption('resource', '', InputOption::VALUE_NONE, 'The object will return with the resource name'),
                 new InputOption('document', '', InputOption::VALUE_NONE, 'Use NelmioApiDocBundle to document the controller'),
@@ -46,7 +47,7 @@ class GenerateDoctrineRESTCommand extends GenerateDoctrineCrudCommand
                 <<<EOT
                 The <info>mdt:generate:rest</info> command generates a REST api based on a Doctrine entity.
 
-<info>php app/console mdt:generate:rest --entity=AcmeBlogBundle:Post --route-prefix=post_admin</info>
+<info>php app/console mdt:generate:rest --entity=AcmeBlogBundle:Post --api-namespace=blog --route-prefix=post_admin</info>
 
 Every generated file is based on a template. There are default templates but they can be overriden by placing custom templates in one of the following locations, by order of priority:
 
@@ -147,7 +148,7 @@ EOT
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
         // route prefix
-        $prefix = 'api';
+        $prefix = 'api/v1';
         $output->writeln(
             array(
                 '',
@@ -159,6 +160,17 @@ EOT
 
         $prefix = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Routes prefix', '/' . $prefix), '/' . $prefix));
         $input->setOption('route-prefix', $prefix);
+
+
+        $output->writeln(
+            array(
+                '',
+                'Determine API Namespace. This will be used to prefix api.',
+                'Namespace "blog" will generate '.$prefix.'/blog/'.$entity.' api path.',
+                ''
+        ));
+        $namespace = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Api namespace', $bundle), $bundle));
+        $input->setOption('api-namespace', $namespace);
 
         // summary
         $output->writeln(
