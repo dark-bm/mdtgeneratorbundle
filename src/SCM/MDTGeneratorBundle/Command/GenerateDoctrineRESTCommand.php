@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use SCM\MDTGeneratorBundle\Generator\DoctrineRESTGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Sensio\Bundle\GeneratorBundle\Command\AutoComplete\EntitiesAutoCompleter;
 use SCM\MDTGeneratorBundle\Manipulator\RoutingManipulator;
 
 /**
@@ -144,6 +145,9 @@ EOT
 
         $question = new Question($questionHelper->getQuestion('The Entity shortcut name', $input->getOption('entity')), $input->getOption('entity'));
         $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
+        $autocompleter = new EntitiesAutoCompleter($this->getContainer()->get('doctrine')->getManager());
+        $autocompleteEntities = $autocompleter->getSuggestions();
+        $question->setAutocompleterValues($autocompleteEntities);
         $entity = $questionHelper->ask($input, $output, $question);
 
         $input->setOption('entity', $entity);
