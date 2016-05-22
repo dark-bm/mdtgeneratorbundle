@@ -40,13 +40,10 @@
 
             $em = $this->getDoctrine()->getManager();
             $entities = $em->getRepository('{{ bundle }}:{{ entity }}')->findBy($filters, $order_by, $limit, $offset);
-            if ($entities) {
-                return $entities;
-            }
 
-            return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
+            return $entities;
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->view($e->getMessage(),500);
         }
 {% endblock method_body %}
 {% block method_return '' %}
