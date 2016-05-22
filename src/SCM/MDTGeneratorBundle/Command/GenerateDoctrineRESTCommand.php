@@ -175,7 +175,7 @@ EOT
                 'Namespace "blog" will generate '.$prefix.'/blog/'.$entity.' api path.',
                 ''
         ));
-        $namespace = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Api namespace', $bundle), $bundle));
+        $namespace = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Api namespace', $this->fromCamelCase($bundle)), $this->fromCamelCase($bundle)));
         $input->setOption('api-namespace', $namespace);
 
         // summary
