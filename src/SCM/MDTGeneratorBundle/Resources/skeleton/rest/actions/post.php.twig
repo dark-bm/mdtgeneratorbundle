@@ -8,6 +8,7 @@
      *   description = "Create a {{ entity }} entity.",
      *   statusCodes = {
      *     201 = "Returned when successful",
+     *     400 = "Returned when validation failed",
      *     500 = "Returned when error"
      *   }
      * )
@@ -27,22 +28,27 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $entity = new {{ entity }}();
-        $form = $this->createForm(get_class(new {{ entity }}Type()), $entity, array("method" => $request->getMethod()));
-        $this->removeExtraFields($request, $form);
-        $form->handleRequest($request);
+        try {
+            $entity = new {{ entity }}();
+            $form = $this->createForm(get_class(new {{ entity }}Type()), $entity, array("method" => $request->getMethod()));
+            $this->removeExtraFields($request, $form);
+            $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
 
-            return $entity;
+                return $entity;
+            }
+            return $this->view(array('errors' => $this->getErrorsFromForm($form), 400);
+        } catch (\Exception $e) {
+            return $this->view($e->getMessage(), 500);
         }
 
 {% endblock method_body %}
 {% block method_return %}
-        return $this->view(array('errors' => $form->getErrors()), 500);
+        return $this->view(array('errors' => $this->getErrorsFromForm($form), 400);
 {% endblock method_return %}
     }
 {% block form '' %}

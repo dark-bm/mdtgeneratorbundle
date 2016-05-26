@@ -8,6 +8,7 @@
      *   description = "Update a {{ entity }} entity.",
      *   statusCodes = {
      *     200 = "Returned when successful",
+     *     400 = "Returned when validation failed",
      *     500 = "Returned when error"
      *   }
      * )
@@ -38,8 +39,7 @@
 
                 return $entity;
             }
-
-            return $this->view(array('errors' => $form->getErrors()), 500);
+            return $this->view(array('errors' => $this->getErrorsFromForm($form)), 400);
         } catch (\Exception $e) {
             return $this->view($e->getMessage(), 500);
         }
