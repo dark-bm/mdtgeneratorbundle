@@ -51,7 +51,7 @@ class MDTController extends FOSRestController
      * @param FormInterface $form
      * @return array
      */
-    private function getErrorsFromForm(FormInterface $form)
+    public function getErrorsFromForm(FormInterface $form)
     {
         $errors = array();
         foreach ($form->getErrors() as $error) {
