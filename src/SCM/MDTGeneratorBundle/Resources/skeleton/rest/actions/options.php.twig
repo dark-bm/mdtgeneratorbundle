@@ -20,13 +20,13 @@
     public function optionsAction()
     {
         $options = [
-            filters=>[
-                names=>[
-                {% for field in properties %}
-                    '{{ field }}'=>'Description for {{ field }}',
-                {% endfor %}
+            'filters'=>[
+                'names'=>[
+            {% for field in properties %}
+                '{{ field }}'=>'Description for {{ field }}',
+            {% endfor %}
                 ]
-                values=>[]
+                'values'=>[]
             ]
         ];
         return $options;
