@@ -1,5 +1,4 @@
     /**
-{% block phpdoc_method_header %}
      * Create a {{ entity }} entity.
      *
      * @ApiDoc(
@@ -17,17 +16,10 @@
      * @param Request $request
      *
      * @return Response
-{% endblock phpdoc_method_header %}
      *
-{% block phpdoc_method_annotations %}
-{% if 'annotation' == format %}{% endif %}
-{% endblock phpdoc_method_annotations %}
      */
-{% block method_definition %}
     public function postAction(Request $request)
-{% endblock method_definition %}
     {
-{% block method_body %}
         try {
             $entity = new {{ entity }}();
             $form = $this->createForm(get_class(new {{ entity }}Type()), $entity, array("method" => $request->getMethod()));
@@ -46,9 +38,4 @@
             return $this->view($e->getMessage(), 500);
         }
 
-{% endblock method_body %}
-{% block method_return %}
-        return $this->view(array('errors' => $this->getErrorsFromForm($form), 400);
-{% endblock method_return %}
     }
-{% block form '' %}

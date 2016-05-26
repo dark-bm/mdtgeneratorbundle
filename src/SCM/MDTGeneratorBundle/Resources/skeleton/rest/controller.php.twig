@@ -2,7 +2,6 @@
 
 namespace {{ namespace }}\Controller{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
 
-{% block use_statements %}
 use {{ namespace }}\Entity\{{ entity }};
 use {{ namespace }}\Form\{{ entity }}Type;
 
@@ -24,24 +23,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use SCM\MDTGeneratorBundle\Controller\MDTController;
-{% endblock use_statements %}
 
 /**
-{% block phpdoc_class_header %}
  * {{ entity }} controller.
-{% endblock phpdoc_class_header %}
  * @RouteResource("{{ entity }}",pluralize=false)
-{% block phpdoc_class_annotations %}
 {% if 'annotation' == format %}
  * @Route("/{{ route_prefix }}")
 {% endif %}
-{% endblock phpdoc_class_annotations %}
  */
-{% block class_definition %}
 class {{ entity_class }}RESTController extends MDTController
-{% endblock class_definition %}
 {
-{% block class_body %}
     {%- include 'rest/actions/getById.php.twig' %}
 
     {%- include 'rest/actions/getAll.php.twig' %}
@@ -53,5 +44,6 @@ class {{ entity_class }}RESTController extends MDTController
     {%- include 'rest/actions/patch.php.twig' %}
 
     {%- include 'rest/actions/delete.php.twig' %}
-{% endblock class_body %}
+
+    {%- include 'rest/actions/options.php.twig' %}
 }

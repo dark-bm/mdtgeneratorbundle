@@ -1,5 +1,4 @@
     /**
-{% block phpdoc_method_header %}
      * Update a {{ entity }} entity.
      *
      * @ApiDoc(
@@ -18,16 +17,9 @@
      * @param $entity
      *
      * @return Response
-{% endblock phpdoc_method_header %}
-{% block phpdoc_method_annotations %}
-{% if 'annotation' == format %}{% endif %}
-{% endblock phpdoc_method_annotations %}
      */
-{% block method_definition %}
     public function putAction(Request $request, {{ entity }} $entity)
-{% endblock method_definition %}
     {
-{% block method_body %}
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
@@ -43,7 +35,4 @@
         } catch (\Exception $e) {
             return $this->view($e->getMessage(), 500);
         }
-{% endblock method_body %}
-{% block method_return '' %}
     }
-{% block form '' %}

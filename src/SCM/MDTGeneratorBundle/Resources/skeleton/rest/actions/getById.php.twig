@@ -1,5 +1,4 @@
     /**
-{% block phpdoc_method_header %}
      * Get a {{ entity }} entity
      *
      * @ApiDoc(
@@ -15,20 +14,9 @@
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
-{% endblock phpdoc_method_header %}
      *
-{% block phpdoc_method_annotations %}
-{% if 'annotation' == format %}
-{% endif %}
-{% endblock phpdoc_method_annotations %}
      */
-{% block method_definition %}
     public function getAction({{ entity }} $entity)
-{% endblock method_definition %}
     {
-{% block method_body %}
         return $entity;
-{% endblock method_body %}
-{% block method_return '' %}
     }
-{% block form '' %}

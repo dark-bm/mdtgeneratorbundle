@@ -57,7 +57,7 @@ class DoctrineRESTGenerator extends Generator
     {
         $this->routePrefix     = $routePrefix;
         $this->routeNamePrefix = str_replace('/', '_', $routePrefix);
-        $this->actions         = array('getById', 'getAll', 'post', 'put', 'delete');
+        $this->actions         = array('getById', 'getAll', 'post', 'put', 'delete','options');
 
         if (count($metadata->identifier) > 1) {
             throw new \RuntimeException('The REST api generator does not support entity classes with multiple primary keys.');
@@ -162,6 +162,7 @@ class DoctrineRESTGenerator extends Generator
                 'namespace'         => $this->bundle->getNamespace(),
                 'entity_namespace'  => $entityNamespace,
                 'format'            => $this->format,
+                'properties'        => $this->metadata->getFieldNames()
             )
         );
     }

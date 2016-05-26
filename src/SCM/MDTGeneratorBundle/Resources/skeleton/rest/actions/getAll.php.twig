@@ -1,5 +1,4 @@
     /**
-{% block phpdoc_method_header %}
      * Get all {{ entity }} entities.
      *
      * @ApiDoc(
@@ -23,16 +22,9 @@
      * @QueryParam(name="limit", requirements="\d+", default="20", description="How many notes to return.")
      * @QueryParam(name="order_by", nullable=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
-{% endblock phpdoc_method_header %}
-{% block phpdoc_method_annotations %}
-{% if 'annotation' == format %}{% endif %}
-{% endblock phpdoc_method_annotations %}
      */
-{% block method_definition %}
     public function cgetAction(ParamFetcherInterface $paramFetcher)
-{% endblock method_definition %}
     {
-{% block method_body %}
         try {
             $offset = $paramFetcher->get('offset');
             $limit = $paramFetcher->get('limit');
@@ -46,7 +38,4 @@
         } catch (\Exception $e) {
             return $this->view($e->getMessage(),500);
         }
-{% endblock method_body %}
-{% block method_return '' %}
     }
-{% block form '' %}

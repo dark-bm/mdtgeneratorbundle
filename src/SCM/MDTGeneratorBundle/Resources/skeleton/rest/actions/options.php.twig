@@ -1,0 +1,32 @@
+    /**
+     * Get {{ entity }} entity filters.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "{{ bundle }}",
+     *   description = "Get {{ entity }} entity filters",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     204 = "Returned when no results",
+     *     500 = "Returned when error"
+     *   }
+     * )
+     *
+     * @View()
+     *
+     * @return Response
+     *
+     */
+    public function optionsAction()
+    {
+        $options = [
+            filters=>[
+                names=>[
+                {% for field in properties %}
+                    '{{ field }}'=>'Description for {{ field }}',
+                {% endfor %}
+                ]
+                values=>[]
+            ]
+        ];
+    }
