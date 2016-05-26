@@ -33,7 +33,7 @@
 
                 return $entity;
             }
-            return $this->view(array('errors' => $this->getErrorsFromForm($form), 400);
+            return $this->view(array('errors' => $this->getErrorsFromForm($form)), 400);
         } catch (\Exception $e) {
             return $this->view($e->getMessage(), 500);
         }

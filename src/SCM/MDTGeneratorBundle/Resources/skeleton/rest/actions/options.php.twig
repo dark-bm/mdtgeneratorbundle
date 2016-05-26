@@ -22,12 +22,12 @@
         $options = [
             'filters'=>[
                 'names'=>[
-            {% for field in properties %}
-                '{{ field }}'=>'Description for {{ field }}',
-            {% endfor %}
-                ]
-                'values'=>[]
-            ]
+{% for field in properties %}
+    '{{ field }}'=>'Description for {{ field }}',
+{% endfor %}
+                ],
+                'values'=>[],
+            ],
         ];
         return $options;
     }
