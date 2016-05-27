@@ -25,7 +25,7 @@
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
             $form = $this->createForm(get_class(new {{ entity }}Type()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
-            $form->handleRequest($request);
+            $form->submit($request);
             if ($form->isValid()) {
                 $em->flush();
 
