@@ -32,6 +32,11 @@
     {% endfor %}
                 ],
             ],
+            'associations' => [
+    {% for field in associatons %}
+                '{{ field }}'=>'NO_LINK',
+    {% endfor %}
+            ],
         ];
         return $options;
     }

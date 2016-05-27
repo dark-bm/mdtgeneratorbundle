@@ -162,7 +162,8 @@ class DoctrineRESTGenerator extends Generator
                 'namespace'         => $this->bundle->getNamespace(),
                 'entity_namespace'  => $entityNamespace,
                 'format'            => $this->format,
-                'properties'        => $this->metadata->getFieldNames()
+                'properties'        => $this->metadata->getFieldNames(),
+                'associations'      => $this->metadata->getAssociationNames(),
             )
         );
     }
