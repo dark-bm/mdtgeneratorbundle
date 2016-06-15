@@ -5,14 +5,14 @@ namespace SCM\MDTGeneratorBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Form\Transformer\EntityToIdObjectTransformer;
-use MDTGeneratorBundle\Form\DataTransformer\EntityArrayToIdArrayTransformer;
-use MDTGeneratorBundle\Form\DataTransformer\ObjectToIdTransformer;
+use SCM\MDTGeneratorBundle\Form\DataTransformer\EntityArrayToIdArrayTransformer;
+use SCM\MDTGeneratorBundle\Form\DataTransformer\ObjectToIdTransformer;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Bridge\Doctrine\Form\EventListener\MergeDoctrineCollectionListener;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use MDTGeneratorBundle\Form\DataTransformer\ArrayToIdTransformer;
+use SCM\MDTGeneratorBundle\Form\DataTransformer\ArrayToIdTransformer;
 
 /**
  * Class RestEntityType
