@@ -13,10 +13,32 @@
      * )
      * @View(serializerEnableMaxDepthChecks=true)
      *
+     * @QueryParam(name="include", array=true, nullable=true, description="Include fields by name. Must be an array ie. &filters[]=id")
+     * @QueryParam(name="exclude", array=true, nullable=true, description="Exclude fields by name. Must be an array ie. &filters[]=id")
+     *
+     * @param Action $entity
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
      *
      */
-    public function getAction({{ entity }} $entity)
+    public function getAction({{ entity }} $entity,ParamFetcherInterface $paramFetcher)
     {
-        return $entity;
+          $include = $paramFetcher->get('include');
+          $exclude = $paramFetcher->get('exclude');
+          $view = $this->view($entity);
+          //$view->getSerializationContext()->setGroups(["Default"]);
+
+          if($exclude && is_array($exclude)){
+               $view->getSerializationContext()->addExclusionStrategy(
+                    new FieldsListExclusionStrategy($exclude)
+               );
+          }
+
+          if($include && is_array($include)){
+               $view->getSerializationContext()->addExclusionStrategy(
+                    new FieldsListInclusionStrategy($include)
+               );
+          }
+
+     return $view;
     }

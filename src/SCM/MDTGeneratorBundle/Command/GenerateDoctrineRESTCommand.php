@@ -154,7 +154,7 @@ EOT
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
         // route prefix
-        $prefix = 'api/v1';
+        $prefix = 'api/v2';
         $output->writeln(
             array(
                 '',

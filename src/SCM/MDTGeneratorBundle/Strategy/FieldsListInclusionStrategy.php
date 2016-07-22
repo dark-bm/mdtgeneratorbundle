@@ -7,16 +7,14 @@ use JMS\Serializer\Exclusion\ExclusionStrategyInterface;
 use JMS\Serializer\Metadata\ClassMetadata;
 use JMS\Serializer\Metadata\PropertyMetadata;
 
-class FieldsListExclusionStrategy extends FieldsListStrategy
+class FieldsListInclusionStrategy extends FieldsListStrategy
 {
-
-
 
     /**
      * {@inheritDoc}
      */
     public function shouldSkipProperty(PropertyMetadata $property, Context $navigatorContext)
     {
-        return $this->isListedPropertyCheck($property, $navigatorContext);
+        return !$this->isListedPropertyCheck($property, $navigatorContext);
     }
 }
