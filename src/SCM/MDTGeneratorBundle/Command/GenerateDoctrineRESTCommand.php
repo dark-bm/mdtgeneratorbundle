@@ -114,7 +114,7 @@ EOT
         $output->writeln('Generating the Form code: <info>OK</info>');
 
         // create route
-        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format, $entity, $prefix));
+        //$runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format, $entity, $prefix));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -154,7 +154,7 @@ EOT
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
         // route prefix
-        $prefix = 'api/v2';
+        $prefix = 'api/v1/'.$entity;
         $output->writeln(
             array(
                 '',
@@ -166,17 +166,6 @@ EOT
 
         $prefix = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Routes prefix', '/' . $prefix), '/' . $prefix));
         $input->setOption('route-prefix', $prefix);
-
-
-        $output->writeln(
-            array(
-                '',
-                'Determine API Namespace. This will be used to prefix api.',
-                'Namespace "blog" will generate '.$prefix.'/blog/'.$entity.' api path.',
-                ''
-        ));
-        $namespace = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Api namespace', $this->fromCamelCase($bundle)), $this->fromCamelCase($bundle)));
-        $input->setOption('api-namespace', $namespace);
 
         // summary
         $output->writeln(
