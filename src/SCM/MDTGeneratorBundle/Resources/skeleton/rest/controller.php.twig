@@ -5,47 +5,30 @@ namespace {{ namespace }}\Controller{{ entity_namespace ? '\\' ~ entity_namespac
 use {{ namespace }}\Entity\{{ entity }};
 use {{ namespace }}\Form\{{ entity }}Type;
 
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\Util\Codes;
+use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-{% if 'annotation' == format -%}
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-{%- endif %}
-use SCM\MDTGeneratorBundle\Strategy\FieldsListExclusionStrategy;
-use SCM\MDTGeneratorBundle\Strategy\FieldsListInclusionStrategy;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use SCM\MDTGeneratorBundle\Controller\MDTController;
 
-/**
+ /**
  * {{ entity }} controller.
- * @RouteResource("{{ entity }}")
-{% if 'annotation' == format %}
- * @Route("/{{ route_prefix }}")
-{% endif %}
+ *
+ * @Route("/{{ route_prefix }}", options={"expose"=true})
  */
-class {{ entity_class }}RESTController extends MDTController
+class {{ entity_class }}Controller extends FOSRestController
 {
-    {%- include 'rest/actions/getById.php.twig' %}
+    {%- include 'rest/actions/listAction.php.twig' %}
 
-    {%- include 'rest/actions/getAll.php.twig' %}
+    {%- include 'rest/actions/createAction.php.twig' %}
 
-    {%- include 'rest/actions/post.php.twig' %}
+    {%- include 'rest/actions/putAction.php.twig' %}
 
-    {%- include 'rest/actions/put.php.twig' %}
+    {%- include 'rest/actions/viewAction.php.twig' %}
 
-    {%- include 'rest/actions/patch.php.twig' %}
+    {%- include 'rest/actions/deleteAction.php.twig' %}
 
-    {%- include 'rest/actions/delete.php.twig' %}
-
-    {%- include 'rest/actions/options.php.twig' %}
 }

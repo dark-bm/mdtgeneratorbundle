@@ -1,0 +1,60 @@
+    /**
+    * Update {{ entity }}.
+    *
+    * JS Route: TODO: Add route
+    *
+    * @param Request $request
+    * @param {{ entity }} $entity
+    * @return Response
+    *
+    * @ApiDoc(
+    *      section="{{ entity }}",
+    *      authentication=TRUE,
+    *      input="{{ namespace }}\Form\{{ entity }}Type",
+    *      statusCodes={
+    *          200="The request was successful and the response body contains the updated resource.",
+    *          400="The data given in the POST failed validation. Inspect the response body for details.",
+    *          401="Authentication credentials are required to access the resource. All requests must be authenticated.",
+    *          403="The supplied authentication credentials are not sufficient to access the resource.",
+    *          404="We could not locate the resource based on the specified URL.",
+    *          409="You cannot create or update a resource because another resource already exists or conflicts with one you are submitting."
+    *      },
+    *     responseMap = {
+    *          200 = {
+    *              "class" = {{ entity }}::class,
+    *              "groups"={},
+    *              "parsers" = {
+    *                  "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+    *              }
+    *          },
+    *          400 = {
+    *            "class" = {{ entity }}Type::class,
+    *            "form_errors" = true,
+    *            "name" = ""
+    *          },
+    *      }
+    * )
+    *
+    * @Rest\Put("/{ {{ entity }} }")
+    *
+    * @Rest\View()
+    *
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    */
+    public function updateAction( Request $request, {{ entity }} $entity )
+    {
+        //$this->denyAccessUnlessGranted({{ entity }}Voter::EDIT, $entity);
+
+        $form = $this->createForm( new {{ entity }}Type(), $entity, array('method' => 'PUT') );
+        $form->submit( $request->request->all(), false );
+
+        if ( !$form->isValid() ) {
+            return $this->view( $form, Response::HTTP_BAD_REQUEST );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist( $entity );
+        $em->flush();
+
+        return $this->view( $entity, Response::HTTP_OK );
+    }

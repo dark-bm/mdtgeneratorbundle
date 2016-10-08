@@ -1,0 +1,62 @@
+    /**
+    * Create {{ entity }}.
+    *
+    * JS Route: TODO: Add route
+    *
+    * @param Request $request
+    * @return Response
+    *
+    * @ApiDoc(
+    *      section="{{ entity }}",
+    *      authentication=TRUE,
+    *      input={
+    *          "class"="{{ namespace }}\Form\{{ entity }}Type",
+    *          "name"=""
+    *      },
+    *      statusCodes={
+    *          201="The request was successful, we created a new resource, and the response body contains the representation.",
+    *          400="The data given in the POST failed validation. Inspect the response body for details.",
+    *          401="Authentication credentials are required to access the resource. All requests must be authenticated.",
+    *          403="The supplied authentication credentials are not sufficient to access the resource.",
+    *          409="You cannot create or update a resource because another resource already exists or conflicts with one you are submitting."
+    *      },
+    *      responseMap = {
+    *          201 = {
+    *              "class" = {{ entity }}::class,
+    *              "groups"={},
+    *              "parsers" = {
+    *                  "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+    *              }
+    *          },
+    *          400 = {
+    *            "class" = {{ entity }}Type::class,
+    *            "form_errors" = true,
+    *            "name" = ""
+    *          },
+    *      }
+    * )
+    *
+    * @Rest\Post("")
+    *
+    * @Rest\View()
+    */
+    public function createAction( Request $request )
+    {
+        $entity = new {{ entity }}();
+        //$this->denyAccessUnlessGranted( {{ entity }}Voter::CREATE, $entity );
+
+        $form = $this->createForm( new {{ entity }}Type(), $entity );
+        $form->submit( $request->request->all() );
+
+        if ( !$form->isValid() ) {
+            $view = $this->view( $form, Response::HTTP_BAD_REQUEST );
+
+            return $this->handleView( $view );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist( $entity );
+        $em->flush();
+
+        return $this->view( $entity, Response::HTTP_CREATED );
+    }

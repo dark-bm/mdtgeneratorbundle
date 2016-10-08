@@ -1,0 +1,32 @@
+    /**
+    * Delete {{ entity }}.
+    *
+    * JS Route: TODO: Add route
+    *
+    * @param {{ entity }} $entity
+    * @return Response
+    *
+    * @ApiDoc(
+    *      section="{{ entity }}",
+    *      authentication=TRUE,
+    *      statusCodes={
+    *          204="The request was successful; the resource was deleted. The deleted resource will not be returned.",
+    *          401="Authentication credentials are required to access the resource. All requests must be authenticated.",
+    *          403="The supplied authentication credentials are not sufficient to access the resource.",
+    *          404="We could not locate the resource based on the specified URL.",
+    *      }
+    * )
+    * @Rest\View(statusCode=204)
+    * @Rest\Delete("/{{{ entity }}}")
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    */
+    public function deleteAction( {{ entity }} $entity )
+    {
+        //$this->denyAccessUnlessGranted({{ entity }}Voter::DELETE, $entity);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove( $entity );
+        $em->flush();
+
+        return $this->view( "", Response::HTTP_NO_CONTENT );
+    }

@@ -1,0 +1,38 @@
+    /**
+    * View {{ entity }}.
+    *
+    * JS Route: TODO: Add route
+    *
+    * @param {{ entity }} $entity
+    * @return Response
+    *
+    * @ApiDoc(
+    *      section="{{ entity }}",
+    *      output={
+    *          "class"="{{ namespace }}\Entity\{{ entity }}",
+    *          "groups"={},
+    *          "parsers" = {
+    *              "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+    *          }
+    *      },
+    *      authentication=TRUE,
+    *      statusCodes={
+    *          200="The request was successful and the response body contains the resource requested.",
+    *          401="Authentication credentials are required to access the resource. All requests must be authenticated.",
+    *          403="The supplied authentication credentials are not sufficient to access the resource.",
+    *          404="We could not locate the resource based on the specified URL.",
+    *      },
+    * )
+    *
+    * @Rest\Get("/{ {{ entity }} }")
+    *
+    * @Rest\View()
+    *
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    */
+    public function viewAction( {{ entity }} $entity )
+    {
+        //$this->denyAccessUnlessGranted({{ entity }}Voter::VIEW, $entity);
+
+        return $this->view( $entity, Response::HTTP_OK );
+    }
