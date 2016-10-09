@@ -26,12 +26,12 @@
     *
     * @Rest\View()
     *
-    * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing.")
-    * @QueryParam(name="limit", requirements="\d+", default="20", description="How many items to return.")
-    * @QueryParam(name="order_by", array=true, nullable=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC")
-    * @QueryParam(name="filters", array=true, nullable=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
+    * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing.")
+    * @Rest\QueryParam(name="limit", requirements="\d+", default="20", description="How many items to return.")
+    * @Rest\QueryParam(name="order_by", array=true, nullable=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC")
+    * @Rest\QueryParam(name="filters", array=true, nullable=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
     */
-    public function listAction()
+    public function listAction(ParamFetcherInterface $paramFetcher)
     {
         //$this->denyAccessUnlessGranted({{ entity }}Voter::VIEW_LIST, new {{ entity }}());
 
