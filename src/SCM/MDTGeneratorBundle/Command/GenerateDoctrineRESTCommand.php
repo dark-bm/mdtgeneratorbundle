@@ -37,7 +37,6 @@ class GenerateDoctrineRESTCommand extends GenerateDoctrineCrudCommand
             array(
                 new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)'),
                 new InputOption('route-prefix', '', InputOption::VALUE_REQUIRED, 'The route prefix'),
-                new InputOption('api-namespace', '', InputOption::VALUE_REQUIRED, 'Api namespace'),
                 new InputOption('overwrite', '', InputOption::VALUE_NONE, 'Do not stop the generation if rest api controller already exist, thus overwriting all generated files'),
                 new InputOption('resource', '', InputOption::VALUE_NONE, 'The object will return with the resource name'),
                 new InputOption('document', '', InputOption::VALUE_NONE, 'Use NelmioApiDocBundle to document the controller'),
@@ -87,9 +86,7 @@ EOT
         $entity = Validators::validateEntityName($input->getOption('entity'));
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
-        $format         = "rest";
         $prefix         = $this->getRoutePrefix($input, $entity);
-        $prefix .= $this->getNamespacePrefix($input,$bundle);
 
         $forceOverwrite = $input->getOption('overwrite');
 
@@ -107,14 +104,10 @@ EOT
         $output->writeln('Generating the REST api code: <info>OK</info>');
 
         $errors = array();
-        $runner = $questionHelper->getRunner($output, $errors);
 
         // form
         $this->generateForm($bundle, $entity, $metadata);
         $output->writeln('Generating the Form code: <info>OK</info>');
-
-        // create route
-        //$runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format, $entity, $prefix));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
     }
@@ -154,7 +147,7 @@ EOT
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
         // route prefix
-        $prefix = 'api/v1/'.$entity;
+        $prefix = 'api/v1/'.strtolower($entity);
         $output->writeln(
             array(
                 '',
@@ -181,56 +174,6 @@ EOT
 
 
     /**
-     * @param QuestionHelper $questionHelper
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param BundleInterface $bundle
-     * @param $entity
-     * @param $prefix
-     * @return array
-     */
-    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, BundleInterface $bundle, $format, $entity, $prefix)
-    {
-        $auto = true;
-        if ($input->isInteractive()) {
-            $question = new ConfirmationQuestion($questionHelper->getQuestion('Confirm automatic update of the Routing', 'yes', '?'), true);
-            $auto     = $questionHelper->ask($input, $output, $question);
-        }
-
-        $output->write('Importing the REST api routes: ');
-        $this->getContainer()->get('filesystem')->mkdir($bundle->getPath() . '/Resources/config/');
-        $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir') . '/config/routing.yml');
-        try {
-            $ret = $auto ? $routing->addResource($bundle->getName(), '/' . $prefix, $entity) : false;
-        } catch (\RuntimeException $exc) {
-            $ret = false;
-        }
-
-        if (!$ret) {
-            $help = sprintf(
-                "        <comment>resource: \"@%s/Controller/%sRESTController.php\"</comment>\n",
-                $bundle->getName(),
-                $entity
-            );
-            $help .= sprintf("        <comment>type:   %s</comment>\n", 'rest');
-            $help .= sprintf("        <comment>prefix:   /%s</comment>\n", $prefix);
-
-            return array(
-                '- Import this resource into the Apps routing file',
-                sprintf('  (%s).', $this->getContainer()->getParameter('kernel.root_dir') . '/config/routing.yml'),
-                '',
-                sprintf(
-                    '    <comment>%s:</comment>',
-                    substr($bundle->getName(), 0, -6) . '_' . $entity . ('' !== $prefix ? '_' . str_replace('/', '_', $prefix) : '')
-                ),
-                $help,
-                '',
-            );
-        }
-    }
-
-
-    /**
      * @param null $bundle
      * @return DoctrineRESTGenerator
      */
@@ -253,17 +196,6 @@ EOT
         $skeletonDirs[] = dirname($reflClass->getFileName()) . '/../Resources';
 
         return $skeletonDirs;
-    }
-
-    protected function getNamespacePrefix(InputInterface $input, $bundle)
-    {
-        $prefix = $input->getOption('api-namespace') ?: strtolower(str_replace(array('\\', '/'), '_', $this->fromCamelCase($bundle)));
-
-        if ($prefix && '/' !== $prefix[0]) {
-            $prefix = '/'.$prefix;
-        }
-
-        return $prefix;
     }
 
     protected  function fromCamelCase($input) {

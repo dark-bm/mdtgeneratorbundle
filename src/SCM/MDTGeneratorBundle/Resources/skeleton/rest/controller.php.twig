@@ -19,7 +19,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  *
  * @Route("/{{ route_prefix }}", options={"expose"=true})
  */
-class {{ entity_class }}Controller extends FOSRestController
+class {{ entity_class }}RESTController extends FOSRestController
 {
     {%- include 'rest/actions/listAction.php.twig' %}
 
