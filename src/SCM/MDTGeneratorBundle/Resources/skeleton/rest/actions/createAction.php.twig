@@ -45,7 +45,7 @@
         $entity = new {{ entity }}();
         //$this->denyAccessUnlessGranted( {{ entity }}Voter::CREATE, $entity );
 
-        $form = $this->createForm( new {{ entity }}Type(), $entity );
+        $form = $this->createForm( {{ entity }}Type::class, $entity );
         $form->submit( $request->request->all() );
 
         if ( !$form->isValid() ) {

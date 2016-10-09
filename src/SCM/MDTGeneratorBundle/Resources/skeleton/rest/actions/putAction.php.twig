@@ -45,7 +45,7 @@
     {
         //$this->denyAccessUnlessGranted({{ entity }}Voter::EDIT, $entity);
 
-        $form = $this->createForm( new {{ entity }}Type(), $entity, array('method' => 'PUT') );
+        $form = $this->createForm( {{ entity }}Type::class, $entity, array('method' => 'PUT') );
         $form->submit( $request->request->all(), false );
 
         if ( !$form->isValid() ) {
