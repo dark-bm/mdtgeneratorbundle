@@ -17,8 +17,8 @@
     *      }
     * )
     * @Rest\View(statusCode=204)
-    * @Rest\Delete("/{ {{ entity }} }")
-    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    * @Rest\Delete("/{{'{' ~ entity|lower ~ '}'}}")
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity|lower }}"})
     */
     public function deleteAction( {{ entity }} $entity )
     {

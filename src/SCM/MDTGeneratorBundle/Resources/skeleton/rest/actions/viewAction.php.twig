@@ -24,11 +24,11 @@
     *      },
     * )
     *
-    * @Rest\Get("/{ {{ entity }} }")
+    * @Rest\Get("/{{'{' ~ entity|lower ~ '}'}}")
     *
     * @Rest\View()
     *
-    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity|lower }}"})
     */
     public function viewAction( {{ entity }} $entity )
     {

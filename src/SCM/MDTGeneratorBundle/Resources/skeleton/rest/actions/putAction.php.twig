@@ -35,11 +35,11 @@
     *      }
     * )
     *
-    * @Rest\Put("/{ {{ entity }} }")
+    * @Rest\Put("/{{ '{' ~ entity|lower ~ '}' }} }")
     *
     * @Rest\View()
     *
-    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity }}"})
+    * @ParamConverter("entity", class="{{ bundle }}:{{ entity }}", options={"id" = "{{ entity|lower }}"})
     */
     public function updateAction( Request $request, {{ entity }} $entity )
     {
